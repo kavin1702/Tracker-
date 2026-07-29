@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+model LearningPath {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  status      String   @default("ACTIVE") // ACTIVE, PAUSED, COMPLETED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  topics      Topic[]
+  logs        Log[]
+}
+
+model Topic {
+  id             String       @id @default(uuid())
+  learningPathId String
+  learningPath   LearningPath @relation(fields: [learningPathId], references: [id], onDelete: Cascade)
+  title          String
+  isCompleted    Boolean      @default(false)
+  order          Int
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  logs           Log[]
+}
+
+model Log {
+  id             String       @id @default(uuid())
+  learningPathId String
+  learningPath   LearningPath @relation(fields: [learningPathId], references: [id], onDelete: Cascade)
+  topicId        String?
+  topic          Topic?       @relation(fields: [topicId], references: [id], onDelete: SetNull)
+  durationMins   Int          // Time spent in minutes
+  notes          String?
+  loggedAt       DateTime     @default(now())
+}
+
+model Streak {
+  id            String    @id @default(uuid())
+  currentStreak Int       @default(0)
+  longestStreak Int       @default(0)
+  lastLoggedAt  DateTime?
+  updatedAt     DateTime  @updatedAt
+}
