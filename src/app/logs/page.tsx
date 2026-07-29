@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { BookOpen, Clock, Calendar, FileText, Trash2, ArrowLeft, AlertCircle } from "lucide-react";
+import AuraHeader from "@/components/AuraHeader";
 
 interface Log {
   id: string;
@@ -115,20 +116,15 @@ export default function LogsPage() {
   return (
     <main className="flex-1 p-5 space-y-6">
       {/* Header */}
-      <header className="flex justify-between items-center animate-fade-in">
-        <div>
-          <span className="text-xs font-semibold text-blue-500 uppercase tracking-widest">
-            Aura Learn
-          </span>
-          <h1 className="text-2xl font-bold text-white tracking-tight">
-            Study Journal
-          </h1>
+      <div className="flex gap-2.5 items-stretch animate-fade-in">
+        <div className="flex-1">
+          <AuraHeader title="Study Journal" />
         </div>
-        <div className="flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/20 px-3 py-1.5 rounded-xl text-xs font-bold text-blue-400">
-          <Clock size={14} />
-          <span>{totalHours} Total Hours</span>
+        <div className="px-3.5 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center gap-1.5 text-xs font-bold text-blue-400">
+          <Clock size={16} />
+          <span>{totalHours} hrs</span>
         </div>
-      </header>
+      </div>
 
       {/* Logs timeline */}
       <section className="animate-slide-up space-y-6">

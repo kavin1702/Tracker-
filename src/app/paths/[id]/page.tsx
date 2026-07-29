@@ -4,6 +4,7 @@ import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Trash, Plus, CheckCircle, Circle, Clock, Tag, ChevronDown, Edit, Save, X } from "lucide-react";
+import { useAuraPoints } from "@/hooks/useAuraPoints";
 
 interface Topic {
   id: string;
@@ -34,6 +35,7 @@ interface LearningPath {
 export default function PathDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: pathId } = use(params);
   const router = useRouter();
+  const { addPoints } = useAuraPoints();
 
   const [path, setPath] = useState<LearningPath | null>(null);
   const [loading, setLoading] = useState(true);
@@ -81,6 +83,9 @@ export default function PathDetailPage({ params }: { params: Promise<{ id: strin
       });
 
       if (res.ok) {
+        // Toggle Aura points (+100 if now completed, -100 if now incomplete)
+        addPoints(!currentStatus ? 100 : -100);
+
         // Optimistically update state
         if (path) {
           const updatedTopics = path.topics.map((t) =>

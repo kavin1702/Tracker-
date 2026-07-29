@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Plus, X, Trash, Compass, FolderOpen, AlertCircle, ArrowRight } from "lucide-react";
+import AuraHeader from "@/components/AuraHeader";
 
 interface Topic {
   id: string;
@@ -125,26 +126,21 @@ export default function PathsPage() {
   return (
     <main className="flex-1 p-5 space-y-6">
       {/* Header */}
-      <header className="flex justify-between items-center animate-fade-in">
-        <div>
-          <span className="text-xs font-semibold text-blue-500 uppercase tracking-widest">
-            Aura Learn
-          </span>
-          <h1 className="text-2xl font-bold text-white tracking-tight">
-            Learning Paths
-          </h1>
+      <div className="flex gap-2.5 items-stretch animate-fade-in">
+        <div className="flex-1">
+          <AuraHeader title="Learning Paths" />
         </div>
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className={`p-2 rounded-xl border transition-all cursor-pointer ${
+          className={`px-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-center ${
             showAddForm
               ? "bg-red-500/10 text-red-500 border-red-500/20"
               : "bg-blue-500/10 text-blue-500 border-blue-500/20 shadow-[0_0_12px_rgba(59,130,246,0.15)]"
           }`}
         >
-          {showAddForm ? <X size={20} /> : <Plus size={20} />}
+          {showAddForm ? <X size={18} /> : <Plus size={18} />}
         </button>
-      </header>
+      </div>
 
       {/* Add Path Form Panel */}
       {showAddForm && (

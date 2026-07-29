@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Flame, Plus, Clock, FileText, CheckCircle, ChevronRight, Zap, Award } from "lucide-react";
+import AuraHeader from "@/components/AuraHeader";
+import CalendarGrid from "@/components/CalendarGrid";
 
 interface Topic {
   id: string;
@@ -64,7 +66,7 @@ export default function Dashboard() {
 
       setStreak(streakData);
       setPaths(pathsData);
-      setLogs(logsData.slice(0, 5)); // Only show top 5 recent logs
+      setLogs(logsData); // FULL logs data for calendar
 
       // Default selected path
       if (pathsData.length > 0) {
@@ -140,20 +142,7 @@ export default function Dashboard() {
 
   return (
     <main className="flex-1 p-5 space-y-6">
-      {/* Header */}
-      <header className="flex justify-between items-center animate-fade-in">
-        <div>
-          <span className="text-xs font-semibold text-blue-500 uppercase tracking-widest">
-            Aura Learn
-          </span>
-          <h1 className="text-2xl font-bold text-white tracking-tight">
-            Dashboard
-          </h1>
-        </div>
-        <div className="p-2 bg-gray-900/60 rounded-xl border border-gray-800">
-          <Zap size={20} className="text-yellow-500 fill-yellow-500/20" />
-        </div>
-      </header>
+      <AuraHeader title="Dashboard" />
 
       {/* Streak Dashboard Card */}
       <section className="animate-slide-up">
@@ -293,6 +282,11 @@ export default function Dashboard() {
         </div>
       </section>
 
+      {/* Study History Calendar Grid */}
+      <section className="animate-slide-up [animation-delay:150ms]">
+        <CalendarGrid logs={logs} />
+      </section>
+
       {/* Learning Paths Progress */}
       <section className="animate-slide-up [animation-delay:200ms] space-y-3">
         <div className="flex justify-between items-center px-1">
@@ -381,7 +375,7 @@ export default function Dashboard() {
           </div>
         ) : (
           <div className="relative border-l-2 border-gray-800/80 ml-3 pl-4 space-y-4">
-            {logs.map((log) => (
+            {logs.slice(0, 5).map((log) => (
               <div key={log.id} className="relative">
                 {/* Timeline circle */}
                 <div className="absolute -left-[23px] top-1 w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
